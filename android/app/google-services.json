@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "414586401847",
+    "project_id": "dsfd-8d801",
+    "storage_bucket": "dsfd-8d801.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414586401847:android:6dffada1822f3043a57bb2",
+        "android_client_info": {
+          "package_name": "br.gov.sp.cps.fatecararas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414586401847-0hkrg41b7m09a65futmkn6tovkld0jmu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD1rN5pAZYbGCLVix0FqRHOrX8YpWAXo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414586401847-0hkrg41b7m09a65futmkn6tovkld0jmu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
