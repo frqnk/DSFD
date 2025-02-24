@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
-
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'firebase_ui.dart';
 
 import 'save_helper.dart' if (dart.library.js_interop) 'save_helper_web.dart';
 
@@ -171,5 +171,29 @@ class Perfil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const AuthGate();
+  }
+}
+
+const clientId =
+    '414586401847-0hkrg41b7m09a65futmkn6tovkld0jmu.apps.googleusercontent.com';
+
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) return const ProfileScreen();
+
+        return SignInScreen(
+          providers: [
+            EmailAuthProvider(),
+            GoogleProvider(clientId: clientId),
+          ],
+        );
+      },
+    );
   }
 }
