@@ -1,0 +1,43 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+env:
+  GIT-USER: github-actions
+  GIT-EMAIL: github-actions@github.com
+  BRANCH-DA-PAGINA: page
+  MENSAGEM-DO-COMMIT: ""
+jobs:
+  publicar-o-site:
+    name: publicar a página
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: trazer o projeto para a área de trabalho
+        uses: actions/checkout@v4
+      - name: preparar o ambiente de desenvolvimento Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: mostrar a versão do Flutter
+        run: flutter --version
+      - name: instalar as dependências
+        run: flutter pub get
+      - name: configurar o Git
+        run: |
+          git config user.name "${{ env.GIT-USER }}"
+          git config user.email "${{ env.GIT-EMAIL }}"
+      - name: construir para a web
+        run: flutter build web --release --wasm
+      - name: publicar a página
+        run: |
+          git --work-tree build/web add --all
+          git reset --soft $(git rev-list --max-parents=0 HEAD)
+          git commit --amend --allow-empty-message --message="${{ env.MENSAGEM-DO-COMMIT }}"
+          git push origin HEAD:${{ env.BRANCH-DA-PAGINA }} --force
